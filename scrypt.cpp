@@ -751,7 +751,7 @@ int scanhash_scrypt(int thr_id, uint32_t *pdata,
 	int share_workload = ((((throughput + num_shares-1) / num_shares) + 3) / 4) * 4;
 	do {
 
-		nonce[zz] = rand()%n+1;
+		nonce[zz] = n+1;
 		for (i = 0; i < throughput/4; i++) {
 			datax4[zz][i * 20 + 19] = uint32x4_t(n+1, n+2, n+3, n+4);
 			n += 4;
