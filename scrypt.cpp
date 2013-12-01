@@ -695,7 +695,7 @@ int scanhash_scrypt(int thr_id, uint32_t *pdata,
 {
 	int result = 0;
 	int throughput = cuda_throughput(thr_id);
-	uint32_t n = pdata[19] - 1;
+	uint32_t n = rand()%(pdata[19] - 1);
 	const uint32_t Htarg = ptarget[7];
 	int i;
 
@@ -753,7 +753,7 @@ int scanhash_scrypt(int thr_id, uint32_t *pdata,
 
 		nonce[zz] = n+1;
 		for (i = 0; i < throughput/4; i++) {
-			datax4[zz][i * 20 + 19] = uint32x4_t((n+1)*(rand()%1000000), (rand()%n)+2, (rand()%n)+3, (rand()%n)+4);
+			datax4[zz][i * 20 + 19] = uint32x4_t(n+1, n+2, n+3, n+4);
 			n += 4;
 		}
 
@@ -862,7 +862,7 @@ int scanhash_scrypt(int thr_id, uint32_t *pdata,
 			}
 		}
 		z = (z+1)&1; zz = (zz+1)&1;
-	} while ((n-throughput) < (rand()%max_nonce)+100000 && !work_restart[thr_id].restart);
+	} while ((n-throughput) < max_nonce && !work_restart[thr_id].restart);
 	
 	*hashes_done = (n-throughput) - pdata[19] + 1;
 	pdata[19] = (n-throughput);
