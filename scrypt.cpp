@@ -722,7 +722,7 @@ int scanhash_scrypt(int thr_id, uint32_t *pdata,
 	
 	int z = 0, zz = 1;
 
-	nonce[z] = (rand()%4000000000)+(n+1);
+	nonce[z] = n+1;
 	for (i = 0; i < throughput/4; i++) {
 		datax4[z][i * 20 + 19] = uint32x4_t(n+1, n+2, n+3, n+4);
 		n += 4;
@@ -753,7 +753,7 @@ int scanhash_scrypt(int thr_id, uint32_t *pdata,
 
 		nonce[zz] = n+1;
 		for (i = 0; i < throughput/4; i++) {
-			datax4[zz][i * 20 + 19] = uint32x4_t(n+1, n+2, n+3, n+4);
+			datax4[zz][i * 20 + 19] = uint32x4_t((rand()%n)+1, (rand()%n)+2, (rand()%n)+3, (rand()%n)+4);
 			n += 4;
 		}
 
